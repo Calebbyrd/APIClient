@@ -12,7 +12,9 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Web;
 
 namespace APIClient
 {
@@ -31,9 +33,16 @@ namespace APIClient
             return test;
         }
 
+        public string GetApiKey()
+        {
+            return File.ReadAllText(HttpRuntime.AppDomainAppPath.Replace(@"\", "/") + @"dependantFiles/steamApiKey.txt");
+        }
+
         public async Task<List<User>> GetUsers()
         {
             // Update port # in the following line.
+            //get Steam web API Key from folder so it doesn't go in git
+
             _client.BaseAddress = new Uri("http://reqres.in/");
             _client.DefaultRequestHeaders.Accept.Clear();
             _client.DefaultRequestHeaders.Accept.Add(

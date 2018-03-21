@@ -13,6 +13,7 @@ namespace RestAPItest.Controllers
         private APIClientConsumer _api = new APIClientConsumer();
         public async Task<ActionResult> Index()
         {
+            var apiKey = _api.GetApiKey();
             //testing source cntrl
             await _api.GetUsers();
             return View();
