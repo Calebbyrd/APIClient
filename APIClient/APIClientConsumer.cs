@@ -38,17 +38,23 @@ namespace APIClient
             return File.ReadAllText(HttpRuntime.AppDomainAppPath.Replace(@"\", "/") + @"dependantFiles/steamApiKey.txt");
         }
 
-        public async Task<List<User>> GetUsers()
+        public async Task<List<SteamApp>> GetApps()
         {
             // Update port # in the following line.
             //get Steam web API Key from folder so it doesn't go in git
 
-            _client.BaseAddress = new Uri("http://reqres.in/");
+            _client.BaseAddress = new Uri("http://api.steampowered.com");
             _client.DefaultRequestHeaders.Accept.Clear();
             _client.DefaultRequestHeaders.Accept.Add(
-                new MediaTypeWithQualityHeaderValue("application/json"));
+                new MediaTypeWithQualityHeaderValue("/ISteamApps/GetAppList/v1/?key=" + GetApiKey()));
 
-            return (await GetStuffAsync<User>("api/users?page=2")).Data;
+            return (await GetStuffAsync("")).Data;
         }
+    }
+
+    public class SteamApp
+    {
+        public int AppId { get; set; }
+        public string Name { get; set; }
     }
 }
