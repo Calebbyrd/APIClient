@@ -15,7 +15,7 @@ namespace RestAPItest.Controllers
         {
             var apiKey = _api.GetApiKey();
             //testing source control
-            await _api.GetUsers();
+            await _api.GetApps();
             return View();
         }
     }

@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="APIClientConsumer.cs" />
     <Compile Include="Models\PagedResult.cs" />
+    <Compile Include="Models\SteamAppList.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

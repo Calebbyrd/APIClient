@@ -9,11 +9,7 @@ using APIClient.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Web;
 
 namespace APIClient
@@ -24,12 +20,12 @@ namespace APIClient
         private HttpClient _client = new HttpClient();
 
 
-        public async Task<PagedResult<T>> GetStuffAsync<T>(string path)
+        public async Task<SteamAppList> GetStuffAsync(string path)
         {
             var response = await _client.GetStringAsync(path);
             //var data = (JArray)JObject.Parse(response).Children<JProperty>().First(p => p.Path == "data").Value;
             //var test = data.ToObject<List<User>>();
-            var test = JsonConvert.DeserializeObject<PagedResult<T>>(response);
+            var test = JsonConvert.DeserializeObject<SteamAppList>(response);
             return test;
         }
 
@@ -38,7 +34,7 @@ namespace APIClient
             return File.ReadAllText(HttpRuntime.AppDomainAppPath.Replace(@"\", "/") + @"dependantFiles/steamApiKey.txt");
         }
 
-        public async Task<List<SteamApp>> GetApps()
+        public async Task<SteamAppList> GetApps()
         {
             // Update port # in the following line.
             //get Steam web API Key from folder so it doesn't go in git
@@ -46,15 +42,14 @@ namespace APIClient
             _client.BaseAddress = new Uri("http://api.steampowered.com");
             _client.DefaultRequestHeaders.Accept.Clear();
             _client.DefaultRequestHeaders.Accept.Add(
-                new MediaTypeWithQualityHeaderValue("/ISteamApps/GetAppList/v1/?key=" + GetApiKey()));
+                new MediaTypeWithQualityHeaderValue("application/json"));
 
-            return (await GetStuffAsync("")).Data;
+            return (await GetStuffAsync("/ISteamApps/GetAppList/v1/?key=" + GetApiKey()));
         }
     }
 
-    public class SteamApp
-    {
-        public int AppId { get; set; }
-        public string Name { get; set; }
-    }
+
+  
+
+
 }
