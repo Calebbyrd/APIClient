@@ -14,7 +14,7 @@ namespace RestAPItest.Controllers
         public async Task<ActionResult> Index()
         {
             var apiKey = _api.GetApiKey();
-            //testing source cntrl
+            //testing source control
             await _api.GetUsers();
             return View();
         }
