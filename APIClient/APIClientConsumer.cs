@@ -34,7 +34,7 @@ namespace APIClient
             return File.ReadAllText(HttpRuntime.AppDomainAppPath.Replace(@"\", "/") + @"dependantFiles/steamApiKey.txt");
         }
 
-        public async Task<SteamAppList> GetApps()
+        public async Task<List<App>> GetApps()
         {
             // Update port # in the following line.
             //get Steam web API Key from folder so it doesn't go in git
@@ -43,8 +43,9 @@ namespace APIClient
             _client.DefaultRequestHeaders.Accept.Clear();
             _client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
-
-            return (await GetStuffAsync("/ISteamApps/GetAppList/v1/?key=" + GetApiKey()));
+            //get just the list of apps without the outer objects.
+            var steamAppsList = await GetStuffAsync("/ISteamApps/GetAppList/v1/?key=" + GetApiKey());
+            return steamAppsList.AppList.apps.App;
         }
     }
 

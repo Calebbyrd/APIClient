@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewBag.Title = "SteamAPI";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Styles.Render("~/Content/SteamAPI/css")
+@Scripts.Render("~/Content/SteamAPI/js")
+<h2>Steam Apps</h2>
+
+<div id="AppListPartialWrapper">
+
+</div>
+
+<script>
+    $(function() {
+        getSteamApps();
+    })
+</script>
+
