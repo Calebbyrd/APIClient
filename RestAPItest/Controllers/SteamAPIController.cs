@@ -26,5 +26,10 @@ namespace RestAPItest.Controllers
             };
             return View("_appList", steamAppList);
         }
+        public async Task<ActionResult> GetUserIdFromVanityUrl(string vanityUrl)
+        {
+            var result = await _api.GetUserIdFromVanityUrl(vanityUrl);
+            return View("_profileInfo", result);
+        }
     }
 }

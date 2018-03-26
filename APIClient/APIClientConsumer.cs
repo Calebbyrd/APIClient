@@ -11,22 +11,27 @@ using Newtonsoft.Json.Linq;
 using System.Net;
 using System.IO;
 using System.Web;
+using RestAPItest.Models;
 
 namespace APIClient
 {
     public class APIClientConsumer
     {
-
-        private HttpClient _client = new HttpClient();
-
-
-        public async Task<SteamAppList> GetStuffAsync(string path)
+        private HttpClient getNewHttpClient()
         {
-            var response = await _client.GetStringAsync(path);
-            //var data = (JArray)JObject.Parse(response).Children<JProperty>().First(p => p.Path == "data").Value;
-            //var test = data.ToObject<List<User>>();
-            var test = JsonConvert.DeserializeObject<SteamAppList>(response);
-            return test;
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri("http://api.steampowered.com");
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(
+                    new MediaTypeWithQualityHeaderValue("application/json"));
+            return client;
+
+        }
+
+        public async Task<string> GetJsonAsync(string path)
+        {
+            var client = getNewHttpClient();
+            return await client.GetStringAsync(path);
         }
 
         public string GetApiKey()
@@ -38,19 +43,19 @@ namespace APIClient
         {
             // Update port # in the following line.
             //get Steam web API Key from folder so it doesn't go in git
+            //get json string
+            var steamAppsList = await GetJsonAsync("/ISteamApps/GetAppList/v1/?key=" + GetApiKey());
+            //convert the json string to an object and just return the list of apps
+            return JsonConvert.DeserializeObject<SteamAppList>(steamAppsList).AppList.apps.App;
+            
+        }
 
-            _client.BaseAddress = new Uri("http://api.steampowered.com");
-            _client.DefaultRequestHeaders.Accept.Clear();
-            _client.DefaultRequestHeaders.Accept.Add(
-                new MediaTypeWithQualityHeaderValue("application/json"));
-            //get just the list of apps without the outer objects.
-            var steamAppsList = await GetStuffAsync("/ISteamApps/GetAppList/v1/?key=" + GetApiKey());
-            return steamAppsList.AppList.apps.App;
+        public async Task<response> GetUserIdFromVanityUrl(string vanityUrl)
+        {
+            var ProfileInfo = await GetJsonAsync("/ISteamUser/ResolveVanityURL/v1/?key=" + GetApiKey() + "&vanityurl=" + vanityUrl);
+            //convert the json string to an object and just return the list of apps
+            var test = JsonConvert.DeserializeObject<SteamProfile>(ProfileInfo);
+            return test.Response;
         }
     }
-
-
-  
-
-
 }

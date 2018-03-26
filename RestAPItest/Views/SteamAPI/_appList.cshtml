@@ -2,5 +2,15 @@
 @model RestAPItest.Models.SteamAppVm
 
 <div class="appListWrapper">
-    @Html.DisplayForModel();
+    @foreach (var app in Model.SteamApps)
+    {
+        <div class="">
+            <span class="">
+                @app.AppId
+            </span>
+            <span class="">
+                @app.Name
+            </span>
+        </div>
+    }
 </div>

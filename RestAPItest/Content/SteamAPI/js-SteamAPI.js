@@ -6,3 +6,16 @@
         }
     });
 }
+
+function getSteamProfileByVanityUrl() {
+    var data = {
+        vanityUrl: $("#profileSearch").val()
+};
+    $.ajax({
+        url: "/SteamAPI/GetUserIdFromVanityUrl",
+        data: data,
+        success: function (data) {
+            $("#profileInfoWrapper").html(data);
+        }
+    });
+}
