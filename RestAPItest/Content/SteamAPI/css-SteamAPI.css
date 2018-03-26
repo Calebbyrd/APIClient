@@ -5,11 +5,8 @@
 .steamApp {
     display: inline-block;
 }
-.appId {
-    display: inline-block;
-    width: 49%;
-}
-.appName {
-    display: inline-block;
-    width: 49%;
+.submitButton {
+    border: 1px solid black;
+    padding: 5px 10px;
+    background-color: lightgray;
 }

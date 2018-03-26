@@ -1,3 +1,22 @@
-﻿@model RestAPItest.Models.response
+﻿@model RestAPItest.Models.SteamProfile
+@{
+    System.DateTime LastLogoffDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
+    if (Model.Response.Players.Any())
+    {
+        LastLogoffDateTime = LastLogoffDateTime.AddSeconds(Model.Response.Players.First().Lastlogoff).ToLocalTime();
+    }
+}
+@Model.Response.SteamId
+@{
+    if (Model.Response.Players.Any())
+    {
+            <span><img src=@Model.Response.Players.First().Avatarmedium /></span>
+        <span>@Model.Response.Players.First().Personaname</span>
+        <span>@LastLogoffDateTime</span>
+    }
+    else
+    {
+        <span>No profile found with that URL</span>
+    }
+}
 
-@Model.SteamId

@@ -50,12 +50,18 @@ namespace APIClient
             
         }
 
-        public async Task<response> GetUserIdFromVanityUrl(string vanityUrl)
+        public async Task<SteamProfile> GetUserIdFromVanityUrl(string vanityUrl)
         {
-            var ProfileInfo = await GetJsonAsync("/ISteamUser/ResolveVanityURL/v1/?key=" + GetApiKey() + "&vanityurl=" + vanityUrl);
-            //convert the json string to an object and just return the list of apps
-            var test = JsonConvert.DeserializeObject<SteamProfile>(ProfileInfo);
-            return test.Response;
+            var profileInfo = await GetJsonAsync("/ISteamUser/ResolveVanityURL/v1/?key=" + GetApiKey() + "&vanityurl=" + vanityUrl);
+            // get SteamID
+            return JsonConvert.DeserializeObject<SteamProfile>(profileInfo);
+            
+        }
+        public async Task<SteamProfile> GetPlayerSummaries(string steamId)
+        {
+            var summaries = await GetJsonAsync("/ISteamUser/GetPlayerSummaries/v2/?key=" + GetApiKey() + "&steamids=" + steamId);
+            //Get profile data from SteamID
+            return JsonConvert.DeserializeObject<SteamProfile>(summaries); 
         }
     }
 }

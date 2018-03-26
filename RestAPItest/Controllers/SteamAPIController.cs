@@ -29,7 +29,8 @@ namespace RestAPItest.Controllers
         public async Task<ActionResult> GetUserIdFromVanityUrl(string vanityUrl)
         {
             var result = await _api.GetUserIdFromVanityUrl(vanityUrl);
-            return View("_profileInfo", result);
+            var profileInfo = await _api.GetPlayerSummaries(result.Response.SteamId);
+            return View("_profileInfo", profileInfo);
         }
     }
 }
