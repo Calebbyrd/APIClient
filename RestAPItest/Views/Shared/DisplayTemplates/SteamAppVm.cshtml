@@ -1,0 +1,13 @@
+﻿@model RestAPItest.Models.SteamAppVm
+
+@foreach (var app in Model.SteamApps)
+{
+    <div class="steamApp">
+        <span class="appId">
+            @app.AppId
+        </span>
+        <span class="appName">
+            @app.Name
+        </span>
+    </div>
+}

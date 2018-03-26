@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using APIClient;
+using RestAPItest.Models;
 
 namespace RestAPItest.Controllers
 {
@@ -19,8 +20,11 @@ namespace RestAPItest.Controllers
 
         public async Task<ActionResult> GetSteamApps()
         {
-            var steamAppList = await _api.GetApps();
-            return View("_allAppList", steamAppList);
+            SteamAppVm steamAppList = new SteamAppVm
+            {
+                SteamApps = await _api.GetApps()
+            };
+            return View("_appList", steamAppList);
         }
     }
 }

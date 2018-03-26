@@ -1,1 +1,15 @@
 ﻿
+.appListWrapper {
+    display: inline-block;
+}
+.steamApp {
+    display: inline-block;
+}
+.appId {
+    display: inline-block;
+    width: 49%;
+}
+.appName {
+    display: inline-block;
+    width: 49%;
+}
