@@ -21,7 +21,7 @@ namespace RestAPItest.Controllers
         public async Task<ActionResult> GetSteamApps()
         {
             SteamAppVm steamAppList = new SteamAppVm
-            {
+            { 
                 SteamApps = await _api.GetApps()
             };
             return View("_appList", steamAppList);
